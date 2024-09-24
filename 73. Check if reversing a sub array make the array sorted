@@ -1,0 +1,137 @@
+Given an array of n distinct integers. The task is to check whether reversing any one sub-array can make the array sorted or not. If the array is already sorted or can be made sorted by reversing any one subarray, print “Yes“, else print “No“.
+
+Examples: 
+Input : arr [] = {1, 2, 5, 4, 3}
+Output : Yes
+By reversing the subarray {5, 4, 3}, the array will be sorted.
+
+Input : arr [] = { 1, 2, 4, 5, 3 }
+Output : No
+
+
+
+<------------- Method - 1 (Sorting ( O(n*log(n) )) ------------------->
+// Java program to check whether reversing a 
+// sub array make the array sorted or not 
+
+import java.util.Arrays; 
+
+class GFG { 
+
+// Return true, if reversing the subarray will 
+// sort the array, else return false. 
+	static boolean checkReverse(int arr[], int n) { 
+		// Copying the array. 
+		int temp[] = new int[n]; 
+		for (int i = 0; i < n; i++) { 
+			temp[i] = arr[i]; 
+		} 
+
+		// Sort the copied array. 
+		Arrays.sort(temp); 
+
+		// Finding the first mismatch. 
+		int front; 
+		for (front = 0; front < n; front++) { 
+			if (temp[front] != arr[front]) { 
+				break; 
+			} 
+		} 
+
+		// Finding the last mismatch. 
+		int back; 
+		for (back = n - 1; back >= 0; back--) { 
+			if (temp[back] != arr[back]) { 
+				break; 
+			} 
+		} 
+
+		// If whole array is sorted 
+		if (front >= back) { 
+			return true; 
+		} 
+
+		// Checking subarray is decreasing or not. 
+		do { 
+			front++; 
+			if (arr[front - 1] < arr[front]) { 
+				return false; 
+			} 
+		} while (front != back); 
+
+		return true; 
+	} 
+
+// Driver Program 
+	public static void main(String[] args) { 
+
+		int arr[] = {1, 2, 5, 4, 3}; 
+		int n = arr.length; 
+
+		if (checkReverse(arr, n)) { 
+			System.out.print("Yes"); 
+		} else { 
+			System.out.print("No"); 
+		} 
+	} 
+} 
+
+
+
+<----------------- Method 3: Linear time solution (O(n)) ---------------->
+public class GFG { 
+
+static void reverse(int[] a,int x,int y) 
+{ 
+	while(x<y) 
+	{ 
+	int temp = a[x]; 
+	a[x] = a[y]; 
+	a[y] = temp; 
+	x++; 
+	y--; 
+	} 
+} 
+static boolean sortArr(int[] a, int n) 
+{ 
+	int x = -1; 
+	int y = -1; 
+
+	for (int i = 0; i < n - 1; i++) { 
+	if (a[i] > a[i + 1]) { 
+		if (x == -1) { 
+		x = i; 
+		} 
+		y = i + 1; 
+	} 
+	} 
+
+	if (x != -1) { 
+	reverse(a,x,y); 
+	for (int i = 0; i < n - 1; i++) { 
+		if (a[i] > a[i + 1]) { 
+		return false; 
+		} 
+	} 
+	} 
+
+	return true; 
+} 
+
+// Driver Code 
+public static void main (String[] args) 
+{ 
+	int arr[] = { 1, 2, 5, 4, 3 }; 
+	int n = arr.length; 
+
+	if(sortArr(arr, n)) 
+	{ 
+	System.out.println("Yes"); 
+	} 
+	else
+	{ 
+	System.out.println("No"); 
+	} 
+} 
+} 
+
