@@ -29,6 +29,26 @@ class Solution {
            }
            s.push(i);
         }
+        return and;
+
+
+
+       // Other Solution
+        int n = temp.length;
+        int hotest = temp[n - 1];
+        int[] ans = new int[n];
+        for (int i = n - 2; i >= 0; i--) {
+            int cur = temp[i];
+            if (cur >= hotest) {
+                hotest = cur;
+            } else {
+                int days = 1;
+                while (temp[i + days] <= cur) {
+                    days += ans[i + days];
+                }
+                ans[i] = days;
+            }
+        }
         return ans;
     }
 }
